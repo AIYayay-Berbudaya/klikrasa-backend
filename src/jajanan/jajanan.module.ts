@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { JajananController } from './jajanan.controller';
 import { JajananService } from './jajanan.service';
-import { Jajanan, JajananSchema } from './schema/jajanan.schema';
+import { Jajanan, JajananSchema } from './schemas/jajanan.schema';
 
 @Module({
     imports: [
@@ -12,6 +12,6 @@ import { Jajanan, JajananSchema } from './schema/jajanan.schema';
     ],
     controllers: [JajananController],
     providers: [JajananService],
-    exports: [JajananService], // Export jika diperlukan di module lain
+    exports: [JajananService],
 })
 export class JajananModule { }

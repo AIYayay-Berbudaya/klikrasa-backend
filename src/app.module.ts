@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import {JajananModule} from './jajanan/jajanan.module';
+import {UmkmModule} from './umkm/umkm.module';
 
 @Module({
   imports: [
@@ -19,7 +20,8 @@ import {JajananModule} from './jajanan/jajanan.module';
         return connection;
       },
     }),
-    JajananModule
+    JajananModule,
+    UmkmModule,
   ],
 })
 export class AppModule { }

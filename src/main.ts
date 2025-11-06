@@ -11,8 +11,6 @@ async function bootstrap() {
     transform: true,
   }));
   
-  app.setGlobalPrefix('api/v1');
-  
   await app.listen(3000);
   console.log('Application is running on: http://localhost:3000');
 }

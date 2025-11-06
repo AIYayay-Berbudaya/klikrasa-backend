@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Jajanan } from './schema/jajanan.schema';
 import { CreateJajananDto } from './dto/create-jajanan.dto';
 import { UpdateJajananDto } from './dto/update-jajanan.dto';
+import { Jajanan } from './schemas/jajanan.schema';
 
 @Injectable()
 export class JajananService {
