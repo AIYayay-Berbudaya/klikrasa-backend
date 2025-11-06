@@ -7,7 +7,17 @@ import { MongooseModule } from '@nestjs/mongoose';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    MongooseModule.forRoot(process.env.MONGODB_URI!),
+    MongooseModule.forRoot(process.env.MONGODB_URI!, {
+      connectionFactory: (connection) => {
+        connection.on('connected', () => {
+          console.log('Connected to MongoDB Atlas');
+        });
+        connection.on('error', (err) => {
+          console.error('MongoDB connection error:', err);
+        });
+        return connection;
+      },
+    }),
   ],
 })
-export class AppModule {}
+export class AppModule { }
