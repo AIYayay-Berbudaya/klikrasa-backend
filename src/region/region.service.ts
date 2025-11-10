@@ -9,14 +9,14 @@ import { Region } from './schemas/region.schema';
 @Injectable()
 export class RegionService {
     constructor(
-        @InjectModel(Region.name) private regionModel: Model<Region>,
-        @InjectModel(Jajanan.name) private jajananModel: Model<Jajanan>,
+        @InjectModel(Region.name) private regionModel: Model<Region & Document>,
+        @InjectModel(Jajanan.name) private jajananModel: Model<Jajanan & Document>,
     ) { }
 
     async create(createRegionDto: CreateRegionDto): Promise<Region> {
         const existingRegion = await this.regionModel.findOne({
             namaDaerah: createRegionDto.namaDaerah,
-        });
+        }).exec();
 
         if (existingRegion) {
             throw new ConflictException(`Daerah ${createRegionDto.namaDaerah} sudah terdaftar`);
@@ -33,8 +33,8 @@ export class RegionService {
             }
         }
 
-        const createdRegion = new this.regionModel(createRegionDto);
-        return createdRegion.save();
+        const createdRegion = await (new this.regionModel(createRegionDto)).save();
+        return createdRegion.toObject();
     }
 
     async findAll(query?: any): Promise<Region[]> {
@@ -54,12 +54,14 @@ export class RegionService {
             filter.namaDaerah = new RegExp(search, 'i');
         }
 
-        return this.regionModel
+        const regions = await this.regionModel
             .find(filter)
             .populate('jajananList', 'nama gambarUrl daerah rasa')
             .limit(Number(limit))
             .skip(Number(skip))
             .exec();
+
+        return regions.map(region => region.toObject());
     }
 
     async findOne(id: string): Promise<Region> {
@@ -76,7 +78,7 @@ export class RegionService {
             throw new NotFoundException(`Region dengan ID ${id} tidak ditemukan`);
         }
 
-        return region;
+        return region.toObject();
     }
 
     async findByName(namaDaerah: string): Promise<Region> {
@@ -129,7 +131,7 @@ export class RegionService {
             throw new NotFoundException(`Region dengan ID ${id} tidak ditemukan`);
         }
 
-        return updatedRegion;
+        return updatedRegion.toObject();
     }
 
     async addJajananToRegion(regionId: string, jajananId: string): Promise<Region> {
@@ -155,10 +157,16 @@ export class RegionService {
         region.jajananList.push(jajananObjectId);
         await region.save();
 
-        return this.regionModel
+        const updatedRegion = await this.regionModel
             .findById(regionId)
             .populate('jajananList')
             .exec();
+        
+        if (!updatedRegion) {
+            throw new NotFoundException(`Region dengan ID ${regionId} tidak ditemukan`);
+        }
+
+        return updatedRegion.toObject();
     }
 
     async removeJajananFromRegion(regionId: string, jajananId: string): Promise<Region> {
@@ -175,10 +183,16 @@ export class RegionService {
         region.jajananList = region.jajananList.filter(id => !id.equals(jajananObjectId));
         await region.save();
 
-        return this.regionModel
+        const updatedRegion = await this.regionModel
             .findById(regionId)
             .populate('jajananList')
             .exec();
+
+        if (!updatedRegion) {
+            throw new NotFoundException(`Region dengan ID ${regionId} tidak ditemukan`);
+        }
+
+        return updatedRegion.toObject();
     }
 
     async remove(id: string): Promise<void> {

@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import {JajananModule} from './jajanan/jajanan.module';
-import {UmkmModule} from './umkm/umkm.module';
+import { JajananModule } from './jajanan/jajanan.module';
+import { UmkmModule } from './umkm/umkm.module';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
   imports: [
@@ -23,5 +25,7 @@ import {UmkmModule} from './umkm/umkm.module';
     JajananModule,
     UmkmModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
