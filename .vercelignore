@@ -1,2 +1,5 @@
-test/
-_nest-cli.json
+node_modules
+src
+test
+.git
+.env
