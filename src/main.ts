@@ -19,7 +19,7 @@ async function bootstrap() {
 
   await app.init();
 
-    if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production') {
     const PORT = process.env.PORT || 3000;
     server.listen(PORT, () => {
       console.log(`Server running locally on http://localhost:${PORT}`);
