@@ -4,31 +4,27 @@ import { Document } from 'mongoose';
 @Schema({ timestamps: true })
 export class Jajanan extends Document {
     @Prop({ required: true })
-    nama: string;
-
-    @Prop()
-    daerah: string;
-
-    @Prop({ type: [String] })
-    bahanUtama: string[];
+    nama_kue: string;
 
     @Prop()
     deskripsi: string;
 
+    @Prop({ type: [String] })
+    sejarah_kue: string[];
+
     @Prop()
-    ceritaBudaya: string;
+    cara_pembuatan: string;
+
+    @Prop()
+    daerah_kue: string;
 
     @Prop()
     gambarUrl: string;
 
     @Prop()
-    rasa: string;
-
-    @Prop()
-    tekstur: string;
+    linksumber: string;
 }
 
 export const JajananSchema = SchemaFactory.createForClass(Jajanan);
 
-// Tambahkan index untuk pencarian
-JajananSchema.index({ nama: 'text', daerah: 'text' });
+JajananSchema.index({ nama_kue: 'text', daerah_kue: 'text' });

@@ -22,14 +22,14 @@ export class JajananService {
         const filter: any = {};
 
         if (daerah) {
-            filter.daerah = new RegExp(daerah, 'i');
+            filter.daerah_kue = new RegExp(daerah, 'i');
         }
 
         if (search) {
             filter.$or = [
-                { nama: new RegExp(search, 'i') },
+                { nama_kue: new RegExp(search, 'i') },
                 { deskripsi: new RegExp(search, 'i') },
-                { daerah: new RegExp(search, 'i') },
+                { daerah_kue: new RegExp(search, 'i') },
             ];
         }
 
@@ -44,7 +44,7 @@ export class JajananService {
         const jajanan = await this.jajananModel.findById(id).exec();
 
         if (!jajanan) {
-            throw new NotFoundException(`Jajanan with ID ${id} not found`);
+            throw new NotFoundException(`Jajanan dengan ID ${id} tidak ditemukan`);
         }
 
         return jajanan;
@@ -56,7 +56,7 @@ export class JajananService {
             .exec();
 
         if (!updatedJajanan) {
-            throw new NotFoundException(`Jajanan with ID ${id} not found`);
+            throw new NotFoundException(`Jajanan dengan ID ${id} tidak ditemukan`);
         }
 
         return updatedJajanan;
@@ -66,7 +66,7 @@ export class JajananService {
         const result = await this.jajananModel.findByIdAndDelete(id).exec();
 
         if (!result) {
-            throw new NotFoundException(`Jajanan with ID ${id} not found`);
+            throw new NotFoundException(`Jajanan dengan ID ${id} tidak ditemukan`);
         }
     }
 
@@ -75,13 +75,14 @@ export class JajananService {
         const filter: any = {};
 
         if (daerah) {
-            filter.daerah = new RegExp(daerah, 'i');
+            filter.daerah_kue = new RegExp(daerah, 'i');
         }
 
         if (search) {
             filter.$or = [
-                { nama: new RegExp(search, 'i') },
+                { nama_kue: new RegExp(search, 'i') },
                 { deskripsi: new RegExp(search, 'i') },
+                { daerah_kue: new RegExp(search, 'i') },
             ];
         }
 
