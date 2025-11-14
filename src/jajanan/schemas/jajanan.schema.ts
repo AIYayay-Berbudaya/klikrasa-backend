@@ -23,6 +23,9 @@ export class Jajanan extends Document {
 
     @Prop()
     linksumber: string;
+
+    @Prop()
+    link_peta_administrasi: string;
 }
 
 export const JajananSchema = SchemaFactory.createForClass(Jajanan);

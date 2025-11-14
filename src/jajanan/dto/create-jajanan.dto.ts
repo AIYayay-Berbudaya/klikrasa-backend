@@ -31,4 +31,9 @@ export class CreateJajananDto {
     @IsOptional()
     @IsUrl()
     linksumber?: string;
+
+    @IsString()
+    @IsOptional()
+    @IsUrl()
+    link_peta_administrasi?: string;
 }
