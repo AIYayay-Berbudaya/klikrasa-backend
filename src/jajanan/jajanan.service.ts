@@ -22,14 +22,15 @@ export class JajananService {
         const filter: any = {};
 
         if (daerah) {
-            filter.daerah_kue = new RegExp(daerah, 'i');
+            filter.daerah_kue = new RegExp(`\\b${daerah}\\b`, 'i');
         }
 
         if (search) {
+            const regex = new RegExp(`\\b${search}\\b`, 'i');
             filter.$or = [
-                { nama_kue: new RegExp(search, 'i') },
-                { deskripsi: new RegExp(search, 'i') },
-                { daerah_kue: new RegExp(search, 'i') },
+                { nama_kue: new RegExp(regex, 'i') },
+                { deskripsi: new RegExp(regex, 'i') },
+                { daerah_kue: new RegExp(regex, 'i') },
             ];
         }
 
